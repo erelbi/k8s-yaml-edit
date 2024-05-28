@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <style>
+    /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#fixBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+#outputYaml {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+  </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YAML Indentation Fixer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Kubernetes YAML Indentation Fixer</h1>
+        <textarea id="inputYaml" placeholder="Enter your YAML here..."></textarea>
+        <button id="fixBtn">Fix Indentation</button>
+        <textarea id="outputYaml" placeholder="Fixed YAML will appear here..." readonly></textarea>
+    </div>
+    <script src="script.js"></script>
+</body>
+  <script>
+    document.getElementById('fixBtn').addEventListener('click', fixIndentation);
+
+function fixIndentation() {
+    const inputYaml = document.getElementById('inputYaml').value;
+    try {
+        // Parse the YAML input
+        const parsedYaml = jsyaml.load(inputYaml);
+        // Dump it back to YAML with correct indentation
+        const fixedYaml = jsyaml.dump(parsedYaml, { indent: 2 });
+        // Display the fixed YAML
+        document.getElementById('outputYaml').value = fixedYaml;
+    } catch (e) {
+        alert('Invalid YAML input');
+    }
+}
+  </script>
+</html>
